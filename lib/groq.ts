@@ -6,10 +6,10 @@ const groq = new Groq({
 
 export async function chatWithGroq(messages: Array<{role: string; content: string}>) {
   try {
-    console.log("Calling Groq with model: llama3-70b-8192");
+    console.log("Calling Groq with model: llama-3.3-70b-versatile");
     const response = await groq.chat.completions.create({
       messages: messages as any,
-      model: "llama3-70b-8192",
+      model: "llama-3.3-70b-versatile",
       temperature: 0.7,
       max_tokens: 1024,
     });
