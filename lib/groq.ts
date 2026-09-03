@@ -6,15 +6,19 @@ const groq = new Groq({
 
 export async function chatWithGroq(messages: Array<{role: string; content: string}>) {
   try {
+    console.log("Calling Groq with model: llama3-70b-8192");
     const response = await groq.chat.completions.create({
       messages: messages as any,
       model: "llama3-70b-8192",
       temperature: 0.7,
       max_tokens: 1024,
     });
+    console.log("Groq response received");
     return response.choices[0]?.message?.content || "";
   } catch (error) {
     console.error("Groq API error:", error);
-    throw new Error("Failed to get response from AI");
+    const err = error as any;
+    const errorMessage = err?.message || err?.error?.message || 'Unknown error';
+    throw new Error(`Groq API failed: ${errorMessage}`);
   }
 }

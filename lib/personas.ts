@@ -56,8 +56,14 @@ User message: "${userMessage}"`;
     }
 
     // Get real market data from CoinGecko
-    const tokenInfo = await getTokenInfo(token);
-    const priceData = await getTokenPrice(token);
+    let tokenInfo, priceData;
+    try {
+      tokenInfo = await getTokenInfo(token);
+      priceData = await getTokenPrice(token);
+    } catch (coinGeckoError) {
+      console.error('CoinGecko error:', coinGeckoError);
+      // Continue with partial data if CoinGecko fails
+    }
 
     return {
       persona: 'researcher',
@@ -76,9 +82,10 @@ User message: "${userMessage}"`;
     };
   } catch (error) {
     console.error('Groq API error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return {
       persona: 'researcher',
-      content: 'I had trouble processing your request. Please try again.',
+      content: `I had trouble processing your request. Error: ${errorMessage}`,
       extractedToken: undefined,
     };
   }
