@@ -1,52 +1,73 @@
 import { chatWithGroq } from './groq';
-import { getTokenInfo, getTokenPrice, searchTokens } from './coingecko';
+import { getTokenInfo, getTokenPrice } from './coingecko';
 
 interface PersonaResponse {
   persona: string;
   content: string;
   data?: any;
+  extractedToken?: string;
 }
 
-// Researcher Persona: Gathers data about tokens
-export async function researcherPersona(tokenQuery: string): Promise<PersonaResponse> {
+// Researcher Persona: Extracts token from natural language using AI, then fetches real data
+export async function researcherPersona(userMessage: string): Promise<PersonaResponse> {
+  const systemPrompt = `You are a crypto research assistant. Extract the cryptocurrency token symbol from the user's message and provide a brief explanation.
+
+Rules:
+- Extract the token symbol (e.g., BTC, ETH, SOL, DOGE)
+- If multiple tokens are mentioned, pick the main one
+- If no clear token is found, return TOKEN: NONE
+- Provide a brief 1-2 sentence explanation
+- Return format: TOKEN: [symbol] [explanation]
+
+Examples:
+- "tell me about btc" → TOKEN: BTC Bitcoin is the first cryptocurrency...
+- "what's eth doing" → TOKEN: ETH Ethereum is currently...
+- "should I buy sol" → TOKEN: SOL Solana is a blockchain platform...`;
+
+User message: "${userMessage}"`;
+
   try {
-    // Search for the token
-    const searchResults = await searchTokens(tokenQuery);
-    
-    if (searchResults.length === 0) {
+    const response = await chatWithGroq([
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userMessage },
+    ]);
+
+    // Parse the response to extract token
+    const tokenMatch = response.match(/TOKEN:\s*(\w+)/i);
+    const token = tokenMatch ? tokenMatch[1].toUpperCase() : null;
+
+    if (!token || token === 'NONE') {
       return {
         persona: 'researcher',
-        content: `I couldn't find any tokens matching "${tokenQuery}". Could you check the spelling or try a different token name?`,
+        content: response.replace(/TOKEN:\s*\w+\s*/i, ''),
+        extractedToken: null,
       };
     }
 
-    const token = searchResults[0];
-    const tokenId = token.id;
-    const tokenSymbol = token.symbol.toUpperCase();
-    
-    // Get detailed token info
-    const tokenInfo = await getTokenInfo(tokenId);
-    const priceData = await getTokenPrice(tokenId);
+    // Get real market data from CoinGecko
+    const tokenInfo = await getTokenInfo(token);
+    const priceData = await getTokenPrice(token);
 
     return {
       persona: 'researcher',
-      content: `I found ${token.name} (${tokenSymbol}). Here's what I gathered:`,
+      content: response.replace(/TOKEN:\s*\w+\s*/i, ''),
+      extractedToken: token,
       data: {
-        name: token.name,
-        symbol: tokenSymbol,
+        symbol: token,
+        name: tokenInfo?.name || token,
         currentPrice: priceData?.usd || 0,
         change24h: priceData?.usd_24h_change || 0,
         marketCap: tokenInfo?.market_data?.market_cap?.usd || 0,
         volume24h: tokenInfo?.market_data?.total_volume?.usd || 0,
         description: tokenInfo?.description?.en || 'No description available',
         categories: tokenInfo?.categories || [],
-        contractAddress: tokenInfo?.platforms?.ethereum || 'N/A',
       },
     };
   } catch (error) {
     return {
       persona: 'researcher',
-      content: `I encountered an error while researching "${tokenQuery}". Please try again.`,
+      content: 'I had trouble processing your request. Please try again.',
+      extractedToken: null,
     };
   }
 }

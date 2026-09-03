@@ -95,7 +95,7 @@ export default function Home() {
           aegis
         </div>
         <button 
-          className="px-5 py-2 text-sm font-medium transition-all"
+          className="px-5 py-2 text-base font-medium transition-all"
           style={{ 
             background: 'transparent',
             border: '1px solid var(--color-rule)',
@@ -231,9 +231,9 @@ export default function Home() {
               02 · research
             </div>
             <h2 
-              className="text-3xl leading-tight"
+              className="text-4xl leading-tight"
               style={{ 
-                fontFamily: 'var(--font-display)',
+                fontFamily: 'var(--font-body)',
                 textTransform: 'lowercase',
                 color: 'var(--color-ink)'
               }}
@@ -288,7 +288,7 @@ export default function Home() {
                     </div>
                   )}
                   <div 
-                    className="text-sm"
+                    className="text-base"
                     style={{ 
                       fontFamily: 'var(--font-body)',
                       textTransform: 'lowercase',
@@ -328,21 +328,30 @@ export default function Home() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder="ask about a token..."
-                className="flex-1 px-4 py-3 text-sm"
+                className="flex-1 px-4 py-3 text-base focus:outline-none"
                 style={{ 
                   background: 'var(--color-paper-2)',
                   border: '1px solid var(--color-rule)',
                   color: 'var(--color-ink)',
                   fontFamily: 'var(--font-body)',
                   textTransform: 'lowercase',
-                  borderRadius: 'var(--radius-sm)'
+                  borderRadius: 'var(--radius-sm)',
+                  transition: 'all 220ms var(--ease-soft)'
+                }}
+                onFocus={(e) => {
+                  e.target.style.background = 'radial-gradient(ellipse at center, var(--color-paper-emit) 0%, transparent 100%)';
+                  e.target.style.borderColor = 'var(--color-accent)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.background = 'var(--color-paper-2)';
+                  e.target.style.borderColor = 'var(--color-rule)';
                 }}
                 disabled={isLoading}
               />
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="px-6 py-3 text-sm font-medium"
+                className="px-6 py-3 text-base font-medium transition-all"
                 style={{ 
                   background: 'var(--color-accent)',
                   color: 'var(--color-paper)',

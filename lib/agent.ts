@@ -36,10 +36,10 @@ export async function processUserMessage(userMessage: string): Promise<AgentResp
 }
 
 async function handleResearchFlow(query: string): Promise<AgentResponse> {
-  // Step 1: Researcher gathers data
+  // Step 1: Researcher extracts token and gets real data using AI
   const researchResult = await researcherPersona(query);
   
-  if (researchResult.data) {
+  if (researchResult.data && researchResult.extractedToken) {
     // Step 2: Educator explains the data
     const educationResult = await educatorPersona(researchResult.data);
     
