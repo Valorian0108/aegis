@@ -8,7 +8,7 @@ export async function chatWithGroq(messages: Array<{role: string; content: strin
   try {
     const response = await groq.chat.completions.create({
       messages: messages as any,
-      model: "llama-3.1-8b-instant",
+      model: "llama-3.3-70b-versatile",
       temperature: 0.7,
       max_tokens: 1024,
     });
