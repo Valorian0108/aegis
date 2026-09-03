@@ -5,7 +5,7 @@ interface PersonaResponse {
   persona: string;
   content: string;
   data?: any;
-  extractedToken?: string;
+  extractedToken?: string | undefined;
 }
 
 // Researcher Persona: Extracts token from natural language using AI, then fetches real data
@@ -39,8 +39,8 @@ User message: "${userMessage}"`;
     if (!token || token === 'NONE') {
       return {
         persona: 'researcher',
-        content: response.replace(/TOKEN:\s*\w+\s*/i, ''),
-        extractedToken: null,
+        content: response ? response.replace(/TOKEN:\s*\w+\s*/i, '') : 'Could not identify a token from your message.',
+        extractedToken: undefined,
       };
     }
 
@@ -67,7 +67,7 @@ User message: "${userMessage}"`;
     return {
       persona: 'researcher',
       content: 'I had trouble processing your request. Please try again.',
-      extractedToken: null,
+      extractedToken: undefined,
     };
   }
 }
