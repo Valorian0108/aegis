@@ -4,7 +4,7 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-export async function chatWithGroq(messages: Array<{role: string; content: string}>) {
+export async function chatWithGroq(messages: Array<{role: string; content: string; name?: string}>) {
   try {
     const response = await groq.chat.completions.create({
       messages,
