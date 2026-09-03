@@ -8,8 +8,19 @@ interface PersonaResponse {
   extractedToken?: string | undefined;
 }
 
+// Check if API key is configured
+const isConfigured = !!process.env.GROQ_API_KEY;
+
 // Researcher Persona: Extracts token from natural language using AI, then fetches real data
 export async function researcherPersona(userMessage: string): Promise<PersonaResponse> {
+  if (!isConfigured) {
+    return {
+      persona: 'researcher',
+      content: 'AI service is not configured. Please add GROQ_API_KEY to environment variables.',
+      extractedToken: undefined,
+    };
+  }
+
   const systemPrompt = `You are a crypto research assistant. Extract the cryptocurrency token symbol from the user's message and provide a brief explanation.
 
 Rules:
@@ -64,6 +75,7 @@ User message: "${userMessage}"`;
       },
     };
   } catch (error) {
+    console.error('Groq API error:', error);
     return {
       persona: 'researcher',
       content: 'I had trouble processing your request. Please try again.',
