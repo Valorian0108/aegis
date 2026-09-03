@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-09-03",
+    "macrostructure": "Split Studio",
+    "theme": "Lumen",
+    "drop": "night",
+    "theme_axes": "dark / classical-serif-lowercase / molten-brass",
+    "enrichment": "E1 filament chamber",
+    "nav": "N9",
+    "footer": "Ft5",
+    "brief": "Aegis - Educational trading agent with AI research and paper trading for crypto newcomers"
+  },
+  {
+    "date": "2026-09-03",
+    "macrostructure": "Marquee Hero",
+    "theme": "Bloom",
+    "enrichment": "none",
+    "brief": "Crypto Educator - Educational trading agent with AI research and paper trading"
+  }
+]

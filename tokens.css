@@ -1,0 +1,79 @@
+/* Hallmark · genre: atmospheric · macrostructure: Split Studio · theme: Lumen (Night Foundry) · enrichment: E1 filament chamber · nav: N9 · footer: Ft5 */
+
+:root {
+  /* Lumen Night Foundry palette */
+  --color-paper: oklch(13% 0.014 265);
+  --color-paper-2: oklch(17% 0.016 265);
+  --color-paper-3: oklch(21% 0.018 265);
+  --color-paper-4: oklch(25% 0.020 265);
+  
+  --color-ink: oklch(96% 0.006 262);
+  --color-accent: oklch(76% 0.17 50);
+  --color-accent-2: oklch(68% 0.16 18);
+  --color-glow: oklch(80% 0.16 50 / 0.42);
+  --color-paper-emit: oklch(76% 0.17 50 / 0.04);
+  --rule-blueprint: oklch(96% 0.006 262 / 0.04);
+  --color-rule: oklch(96% 0.006 262 / 0.12);
+  --color-muted: oklch(60% 0.01 262);
+  
+  /* Error */
+  --color-error: oklch(60% 0.20 25);
+  
+  /* Success */
+  --color-success: oklch(70% 0.15 150);
+  
+  /* Font families - Lumen three-family system */
+  --font-display: 'Instrument Serif', serif;
+  --font-body: 'Geist', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* Spacing scale - 4pt */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 8rem;
+  
+  /* Text scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-display: clamp(3rem, 6vw + 1rem, 6rem);
+  
+  /* Easings */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.67, 0, 0.83, 0);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+  
+  /* Durations */
+  --dur-fast: 150ms;
+  --dur-normal: 300ms;
+  --dur-slow: 500ms;
+  --dur-pulse: 4s;
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Rules */
+  --rule-thin: 1px;
+  --rule-normal: 2px;
+  --rule-thick: 4px;
+  
+  /* Page gutter */
+  --page-gutter: clamp(1.5rem, 4vw, 3rem);
+  
+  /* Tracking */
+  --tracking-micro: 0.10em;
+  --tracking-tight: -0.03em;
+}
