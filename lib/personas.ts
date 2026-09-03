@@ -71,8 +71,8 @@ You are given token data and should explain what the token is, what it does, and
 
   try {
     const response = await chatWithGroq([
-      { role: 'system', content: systemPrompt, name: 'system' },
-      { role: 'user', content: userPrompt, name: 'user' },
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt },
     ]);
 
     return {

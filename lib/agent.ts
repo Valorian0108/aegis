@@ -11,7 +11,7 @@ export interface AgentMessage {
 export interface AgentResponse {
   message: AgentMessage;
   portfolio?: any;
-  actionRequired?: boolean;
+  actionRequired?: boolean | { type: string; token: string; amount: number; price: number };
 }
 
 export async function processUserMessage(userMessage: string): Promise<AgentResponse> {
