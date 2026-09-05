@@ -9,14 +9,14 @@ interface PersonaResponse {
 }
 
 // Check if API key is configured
-const isConfigured = !!process.env.GROQ_API_KEY;
+const isConfigured = !!process.env.OPENROUTER_API_KEY;
 
 // Researcher Persona: Extracts token from natural language using AI, then fetches real data
 export async function researcherPersona(userMessage: string): Promise<PersonaResponse> {
   if (!isConfigured) {
     return {
       persona: 'researcher',
-      content: 'AI service is not configured. Please add GROQ_API_KEY to environment variables.',
+      content: 'AI service is not configured. Please add OPENROUTER_API_KEY to environment variables.',
       extractedToken: undefined,
     };
   }
